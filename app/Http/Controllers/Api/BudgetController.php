@@ -29,6 +29,10 @@ class BudgetController extends Controller
         return new BudgetResource($budget);
     }
 
+    public function show(Budget $budget) {
+        return new BudgetResource($budget);
+    }
+
     public function update(StoreBudgetRequest $request, Budget $budget) {
 
         $validatedData = $request->validated();

@@ -21,10 +21,17 @@ Route::post('/register', [\App\Http\Controllers\Api\AuthController::class, 'regi
 
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
-    Route::get('/budgets', [\App\Http\Controllers\Api\BudgetController::class, 'index']);
-    Route::post('/budgets', [\App\Http\Controllers\Api\BudgetController::class, 'store']);
-    Route::put('/budgets/{budget}', [\App\Http\Controllers\Api\BudgetController::class, 'update']);
-    Route::delete('/budgets/{budget}', [\App\Http\Controllers\Api\BudgetController::class, 'destroy']);
+
+   // Current User Details
+    Route::get('/users/me', \App\Http\Controllers\Api\MeController::class);
+
+
+    // Budget
+    Route::apiResource('budgets', \App\Http\Controllers\Api\BudgetController::class);
+
+    //Transaction
+    Route::apiResource('transactions', \App\Http\Controllers\Api\TransactionController::class);
+
 });
 
 
