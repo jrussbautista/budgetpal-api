@@ -10,6 +10,12 @@ use Illuminate\Http\Request;
 
 class TransactionController extends Controller
 {
+
+    public function __construct() {
+        $this->authorizeResource(Transaction::class, 'transaction');
+    }
+
+
     public function index() {
         $transactions = auth()->user()->transactions;
         return TransactionResource::collection($transactions);

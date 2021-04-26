@@ -10,6 +10,10 @@ use Illuminate\Http\Request;
 
 class BudgetController extends Controller
 {
+    public function __construct() {
+        $this->authorizeResource(Budget::class, 'budget');
+    }
+
     public function index() {
         $budgets = auth()->user()->budgets;
         return BudgetResource::collection($budgets);
