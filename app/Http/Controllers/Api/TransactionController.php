@@ -17,15 +17,22 @@ class TransactionController extends Controller
 
 
     public function index() {
-        $transactions = auth()->user()->transactions;
+        
+        $transactions = auth()->user()->transactions()
+        ->when(request('category_id') !== null, function($query) {
+            $query->where('category_id', request('category_id'));
+        })->get();
+
         return TransactionResource::collection($transactions);
     }
 
     public function store(StoreTransactionRequest $request){
 
-        $validatedData = $request->validated();
+        $transaction = $request->validated();
 
-        $transaction = auth()->user()->transactions()->create($validatedData);
+        $transaction['amount'] * 100;
+
+        $transaction = auth()->user()->transactions()->create($transaction);
 
         return new TransactionResource($transaction);
     }
@@ -37,6 +44,7 @@ class TransactionController extends Controller
     public function update(StoreTransactionRequest $request, Transaction $transaction) {
         $validatedData = $request->validated();
 
+        $transaction->setAmountAttribute($validatedData['amount']);
         $transaction->update($validatedData);
 
         return new TransactionResource($transaction);

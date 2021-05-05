@@ -20,7 +20,8 @@ class BudgetResource extends JsonResource
             'category' => new CategoryResource($this->category),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'user_id' => $this->user_id
+            'user_id' => $this->user_id,
+            'amount_spent'  => $this->spent
         ];
     }
 }

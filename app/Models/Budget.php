@@ -18,4 +18,20 @@ class Budget extends Model
     public function user() {
         return $this->belongsTo(User::class);
     }
+
+    public function getAmountAttribute() {
+        return $this->attributes['amount'] / 100;
+    }
+
+    public function getSpentAttribute() {
+        $spent = auth()->user()
+            ->transactions()
+            ->where('category_id', $this->category_id)
+            ->where('type', 'expense')
+            ->sum('amount');
+        return $spent / 100;
+    }
+
+
+
 }

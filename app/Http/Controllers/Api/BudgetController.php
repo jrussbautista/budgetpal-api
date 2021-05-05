@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreBudgetRequest;
 use App\Http\Resources\BudgetResource;
 use App\Models\Budget;
-use Illuminate\Http\Request;
+
 
 class BudgetController extends Controller
 {
@@ -15,7 +15,8 @@ class BudgetController extends Controller
     }
 
     public function index() {
-        $budgets = auth()->user()->budgets;
+        $budgets = auth()->user()->budgets()->orderByDesc('created_at')->get();
+        
         return BudgetResource::collection($budgets);
     }
 
@@ -40,6 +41,7 @@ class BudgetController extends Controller
     public function update(StoreBudgetRequest $request, Budget $budget) {
 
         $validatedData = $request->validated();
+
         $budget->update($validatedData);
 
         return new BudgetResource($budget);

@@ -1,6 +1,10 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\BudgetController;
+use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\DashboardController;
+use App\Http\Controllers\Api\MeController;
+use App\Http\Controllers\Api\TransactionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,14 +27,18 @@ Route::post('/register', [\App\Http\Controllers\Api\AuthController::class, 'regi
 Route::group(['middleware' => ['auth:sanctum']], function () {
 
    // Current User Details
-    Route::get('/users/me', \App\Http\Controllers\Api\MeController::class);
+    Route::get('/users/me', MeController::class);
 
+    Route::get('/dashboard', DashboardController::class);
+
+    // Categories
+    Route::get('/categories', [CategoryController::class, 'index']);
 
     // Budget
-    Route::apiResource('budgets', \App\Http\Controllers\Api\BudgetController::class);
+    Route::apiResource('budgets', BudgetController::class);
 
     //Transaction
-    Route::apiResource('transactions', \App\Http\Controllers\Api\TransactionController::class);
+    Route::apiResource('transactions', TransactionController::class);
 
 });
 
