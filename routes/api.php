@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\BudgetController;
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\ChangePasswordController;
 use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\MeController;
 use App\Http\Controllers\Api\TransactionController;
@@ -29,6 +30,10 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
    // Current User Details
     Route::get('/users/me', MeController::class);
 
+
+    Route::post('/change-password', ChangePasswordController::class);
+
+    // Dashboard
     Route::get('/dashboard', DashboardController::class);
 
     // Categories
@@ -39,6 +44,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     //Transaction
     Route::apiResource('transactions', TransactionController::class);
+
+
 
 });
 

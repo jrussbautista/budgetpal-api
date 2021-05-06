@@ -52,7 +52,7 @@ class DashboardController extends Controller
                                 'value' => $total_remaining_budget
                             ],
                         ]
-                    ]
+                    ]   
             ];
     }
 }
