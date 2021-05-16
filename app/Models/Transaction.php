@@ -17,10 +17,6 @@ class Transaction extends Model
         return $this->attributes['amount'] / 100;
     }
 
-    public function setAmountAttribute($val) {
-        return $this->attributes['amount'] = $val * 100;
-    }
-
     public function category() {
         return $this->belongsTo(Category::class);
     }

@@ -21,7 +21,7 @@ class TransactionController extends Controller
         $transactions = auth()->user()->transactions()
         ->when(request('category_id') !== null, function($query) {
             $query->where('category_id', request('category_id'));
-        })->get();
+        })->orderByDesc('created_at')->get();
 
         return TransactionResource::collection($transactions);
     }
@@ -44,7 +44,8 @@ class TransactionController extends Controller
     public function update(StoreTransactionRequest $request, Transaction $transaction) {
         $validatedData = $request->validated();
 
-        $transaction->setAmountAttribute($validatedData['amount']);
+        $validatedData['amount']  *= 100;
+        
         $transaction->update($validatedData);
 
         return new TransactionResource($transaction);

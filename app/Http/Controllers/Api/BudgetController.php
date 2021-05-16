@@ -26,7 +26,7 @@ class BudgetController extends Controller
 
         $budget = auth()->user()->budgets()->create(
             [
-                'amount' => $validatedData['amount'],
+                'amount' => $validatedData['amount'] * 100,
                 'category_id' => $validatedData['category_id']
             ]
         );
@@ -41,6 +41,8 @@ class BudgetController extends Controller
     public function update(StoreBudgetRequest $request, Budget $budget) {
 
         $validatedData = $request->validated();
+
+        $validatedData['amount']  *= 100;
 
         $budget->update($validatedData);
 

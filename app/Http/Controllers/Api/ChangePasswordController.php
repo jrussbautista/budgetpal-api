@@ -17,17 +17,17 @@ class ChangePasswordController extends Controller
     public function __invoke(Request $request)
     {
         $credentials = $request->validate([
-            'old_password' => 'required|min:6',
+            'current_password' => 'required|min:6',
             'new_password'  => 'required|min:6|confirmed',
         ]);
 
         $currentUser = auth()->user();
         $currentUserPassword = $currentUser->password;
-        $oldPassword = $credentials['old_password'];
+        $oldPassword = $credentials['current_password'];
         $newPassword = $credentials['new_password'];
 
         if(!Hash::check($oldPassword, $currentUserPassword)){
-            return response(['message' => 'Old Password is incorrect'], 400);
+            return response(['message' => 'Current Password is incorrect'], 400);
         }
 
         if(Hash::check($newPassword, $currentUserPassword)) {

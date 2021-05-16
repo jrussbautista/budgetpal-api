@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\ChangePasswordController;
 use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\MeController;
 use App\Http\Controllers\Api\TransactionController;
+use App\Http\Controllers\Api\UpdateProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,10 +29,11 @@ Route::post('/register', [\App\Http\Controllers\Api\AuthController::class, 'regi
 Route::group(['middleware' => ['auth:sanctum']], function () {
 
    // Current User Details
-    Route::get('/users/me', MeController::class);
+    Route::get('/account/me', MeController::class);
 
+    Route::post('/account/change-password', ChangePasswordController::class);
 
-    Route::post('/change-password', ChangePasswordController::class);
+    Route::post('/account/update-profile', UpdateProfileController::class);
 
     // Dashboard
     Route::get('/dashboard', DashboardController::class);
