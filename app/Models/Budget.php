@@ -38,7 +38,9 @@ class Budget extends Model
             ->transactions()
             ->where('category_id', $this->category_id)
             ->where('type', 'expense')
+            ->whereBetween('happened_on', [$this->start_date, $this->end_date])
             ->sum('amount');
+
         return number_format($spent / 100, 2, '.', '');
     }
 
