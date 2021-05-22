@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreTransactionRequest;
-use App\Http\Resources\TransactionResource;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\TransactionResource;
+use App\Http\Requests\StoreTransactionRequest;
 
 class TransactionController extends Controller
 {
@@ -21,7 +21,22 @@ class TransactionController extends Controller
         $transactions = auth()->user()->transactions()
         ->when(request('category_id') !== null, function($query) {
             $query->where('category_id', request('category_id'));
-        })->orderByDesc('created_at')->get();
+        })
+        ->when(request('type') !== null, function($query) {
+            $query->where('type', request('type'));
+        })
+        ->when(request('title') !== null, function($query) {
+            $query->where('title', 'LIKE', "%". request('title') . "%");
+        })
+        ->when(request('min_amount') !== null && request('max_amount') !== null, function($query) {
+            $query->whereBetween('amount', [request('min_amount') * 100, request('max_amount') * 100]);
+        })
+        ->when(request('start_date') !== null && request('end_date') !== null, function($query) {
+            $start_date = request('start_date');
+            $end_date = request('end_date');
+            $query->whereBetween('happened_on', [$start_date, $end_date]);
+        })
+        ->orderByDesc('created_at')->get();
 
         return TransactionResource::collection($transactions);
     }
@@ -30,7 +45,7 @@ class TransactionController extends Controller
 
         $transaction = $request->validated();
 
-        $transaction['amount'] * 100;
+        $transaction['amount'] *= 100;
 
         $transaction = auth()->user()->transactions()->create($transaction);
 

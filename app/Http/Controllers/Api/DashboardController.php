@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
+
 
 class DashboardController extends Controller
 {
@@ -41,15 +41,15 @@ class DashboardController extends Controller
                         [
                             [
                                 'name' => 'Total Spent Today',
-                                'value' => $total_spent_today
+                                'value' => number_format($total_spent_today, 2, '.', '')
                             ],
                             [
                                 'name' => 'Total Spent Monthly',
-                                'value' => $total_monthly_spent
+                                'value' => number_format($total_monthly_spent, 2, '.', '')
                             ],
                             [
                                 'name' => 'Total Remaining Budget',
-                                'value' => $total_remaining_budget
+                                'value' => number_format($total_remaining_budget, 2, '.', '')
                             ],
                         ]
                     ]   

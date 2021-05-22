@@ -9,7 +9,7 @@ class Budget extends Model
 {
     use HasFactory;
 
-    protected $fillable  = ['amount', 'category_id'];
+    protected $fillable  = ['amount', 'category_id', 'start_date', 'end_date'];
 
     public function category() {
         return $this->belongsTo(Category::class);
@@ -19,8 +19,18 @@ class Budget extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function scopeByCategory($query, $category_id) {
+        return $query->where('category_id', $category_id);
+    }
+
+    public function scopeByDates($query, $start_date, $end_date) {
+        return $query->where('start_date', $start_date)
+            ->where('end_date', $end_date);
+    }
+
+
     public function getAmountAttribute() {
-        return $this->attributes['amount'] / 100;
+        return number_format($this->attributes['amount'] / 100, 2, '.', '');
     }
 
     public function getSpentAttribute() {
@@ -29,7 +39,7 @@ class Budget extends Model
             ->where('category_id', $this->category_id)
             ->where('type', 'expense')
             ->sum('amount');
-        return $spent / 100;
+        return number_format($spent / 100, 2, '.', '');
     }
 
 

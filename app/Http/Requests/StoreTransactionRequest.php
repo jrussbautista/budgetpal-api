@@ -27,7 +27,8 @@ class StoreTransactionRequest extends FormRequest
             'title' => 'required',
             'amount' => 'required',
             'category_id' => 'required|exists:categories,id',
-            'type' => 'required|in:expense,income'
+            'type' => 'required|in:expense,income',
+            'happened_on' => 'required|date'
         ];
     }
 }

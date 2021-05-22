@@ -10,11 +10,11 @@ class Transaction extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['amount', 'category_id', 'type', 'title'];
+    protected $fillable = ['amount', 'category_id', 'type', 'title',  'happened_on'];
 
 
     public function getAmountAttribute() {
-        return $this->attributes['amount'] / 100;
+        return number_format($this->attributes['amount'] / 100, 2, '.', '');
     }
 
     public function category() {
