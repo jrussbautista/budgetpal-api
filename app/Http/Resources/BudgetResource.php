@@ -25,6 +25,7 @@ class BudgetResource extends JsonResource
             'amount_spent'  => $this->spent,
             'start_date' => Carbon::parse($this->start_date)->format('F j, Y'), 
             'end_date' => Carbon::parse($this->end_date)->format('F j, Y'), 
+            'status' => $this->status
         ];
     }
 }
