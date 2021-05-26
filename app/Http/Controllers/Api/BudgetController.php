@@ -14,15 +14,6 @@ class BudgetController extends Controller
         $this->authorizeResource(Budget::class, 'budget');
     }
 
-    private function isBudgetExists($category_id, $star_date, $end_date) {
-        
-        return auth()->user()
-            ->budgets()
-            ->byCategory($category_id)
-            ->byDates($star_date, $end_date)
-            ->count();
-    }
-
     public function index() {
         $budgets = auth()->user()->budgets()->orderByDesc('created_at')->get();
         
@@ -64,7 +55,7 @@ class BudgetController extends Controller
         $end_date = $validatedData['end_date'];
         $category_id = $validatedData['category_id'];
 
-       $isExist = $this->isBudgetExists($category_id, $star_date, $end_date['end_date']);
+       $isExist = $this->isBudgetExists($category_id, $star_date, $end_date);
 
         if($isExist) {
             return response(['message' => 'Budget for this category and date was already created'], 409);
@@ -81,4 +72,12 @@ class BudgetController extends Controller
         return response()->noContent();
     }
 
+    private function isBudgetExists($category_id, $star_date, $end_date) {
+        
+        return auth()->user()
+            ->budgets()
+            ->byCategory($category_id)
+            ->byDates($star_date, $end_date)
+            ->count();
+    }
 }
