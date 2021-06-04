@@ -73,7 +73,6 @@ class BudgetController extends Controller
     }
 
     private function isBudgetExists($category_id, $star_date, $end_date) {
-        
         return auth()->user()
             ->budgets()
             ->byCategory($category_id)

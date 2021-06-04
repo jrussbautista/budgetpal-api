@@ -17,7 +17,9 @@ class TransactionController extends Controller
 
 
     public function index() {
-        
+
+        $limit = request('limit') ?? 10;
+
         $transactions = auth()->user()->transactions()
         ->when(request('category_id') !== null, function($query) {
             $query->where('category_id', request('category_id'));
@@ -36,7 +38,7 @@ class TransactionController extends Controller
             $end_date = request('end_date');
             $query->whereBetween('happened_on', [$start_date, $end_date]);
         })
-        ->orderByDesc('created_at')->get();
+        ->orderByDesc('created_at')->paginate($limit);
 
         return TransactionResource::collection($transactions);
     }

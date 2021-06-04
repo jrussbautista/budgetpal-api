@@ -36,7 +36,7 @@ class Budget extends Model
     }
 
     public function getAmountAttribute() {
-        return number_format($this->attributes['amount'] / 100, 2, '.', '');
+        return number_format($this->attributes['amount'] / 100, 2);
     }
 
     public function getSpentAttribute() {
@@ -47,7 +47,7 @@ class Budget extends Model
             ->whereBetween('happened_on', [$this->start_date, $this->end_date])
             ->sum('amount');
 
-        return number_format($spent / 100, 2, '.', '');
+        return number_format($spent / 100, 2);
     }
 
 
