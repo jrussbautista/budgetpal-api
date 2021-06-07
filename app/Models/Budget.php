@@ -29,6 +29,17 @@ class Budget extends Model
             ->where('end_date', $end_date);
     }
 
+    public function scopeByOnGoing($query) {
+        $today = Carbon::today();
+        return $query->where('end_date', '>=', $today);
+    }
+
+    public function getSpentPercentageAttribute() {
+        $value = ($this->amount_spent / $this->amount)  * 100;
+        $result = round($value,  0);
+       return $result > 100 ? '100%' : $result . '%';
+    }
+
     public function getStatusAttribute() {
         $today = Carbon::today();
         $end_date = Carbon::createFromFormat('Y-m-d H:i:s', "{$this->end_date} 00:00:00");
@@ -36,18 +47,18 @@ class Budget extends Model
     }
 
     public function getAmountAttribute() {
-        return number_format($this->attributes['amount'] / 100, 2);
+        return $this->attributes['amount'] / 100;
     }
 
-    public function getSpentAttribute() {
+    public function getAmountSpentAttribute() {
         $spent = auth()->user()
             ->transactions()
             ->where('category_id', $this->category_id)
             ->where('type', 'expense')
             ->whereBetween('happened_on', [$this->start_date, $this->end_date])
             ->sum('amount');
-
-        return number_format($spent / 100, 2);
+            
+        return $spent / 100;
     }
 
 

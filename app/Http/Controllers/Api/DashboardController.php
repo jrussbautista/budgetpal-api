@@ -20,50 +20,55 @@ class DashboardController extends Controller
         $totalSpentToday = auth()
             ->user()
             ->transactions()
-            ->whereDate('created_at', $today)
-            ->sum('amount') / 100;
+            ->whereYear('happened_on', $currentYear)
+            ->whereMonth('happened_on', $currentMonth)
+            ->whereDate('happened_on', $today)
+            ->sum('amount');
 
         $totalSpentMonth =  auth()
             ->user()
             ->transactions()
-            ->whereMonth('created_at', $currentMonth)
-            ->sum('amount') / 100;
+            ->whereYear('happened_on', $currentYear)
+            ->whereMonth('happened_on', $currentMonth)
+            ->sum('amount');
+
 
         $totalSpentYear =  auth()
             ->user()
             ->transactions()
-            ->whereYear('created_at', $currentYear)
-            ->sum('amount') / 100;
-
+            ->whereYear('happened_on', $currentYear)
+            ->sum('amount');
 
         $recentTransaction = auth()
             ->user()
             ->transactions()
-    
+            ->orderByDesc('happened_on')
             ->first();
 
         $recentOnGoingBudget = auth()
             ->user()
             ->budgets()
+            ->byOnGoing()
             ->first();
+
 
         return [
                 'data' => [
                     'recentTransaction' =>  new TransactionResource($recentTransaction),
-                    'recentOnGoingBudget' => new BudgetResource($recentOnGoingBudget),
+                    'recentOnGoingBudget' => $recentOnGoingBudget ? new BudgetResource($recentOnGoingBudget): null,
                     'analytics' => 
                         [
                             [
                                 'name' => 'Total Spent Today',
-                                'value' => number_format($totalSpentToday, 2)
+                                'value' => $totalSpentToday / 100
                             ],
                             [
                                 'name' => 'Total Spent This Month',
-                                'value' => number_format($totalSpentMonth, 2)
+                                'value' => $totalSpentMonth / 100
                             ],
                             [
                                 'name' => 'Total Spent This Year',
-                                'value' => number_format($totalSpentYear, 2)
+                                'value' => $totalSpentYear / 100
                             ],
                         ],
                     ]

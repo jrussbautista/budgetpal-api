@@ -38,7 +38,7 @@ class TransactionController extends Controller
             $end_date = request('end_date');
             $query->whereBetween('happened_on', [$start_date, $end_date]);
         })
-        ->orderByDesc('created_at')->paginate($limit);
+        ->orderByDesc('happened_on')->paginate($limit);
 
         return TransactionResource::collection($transactions);
     }

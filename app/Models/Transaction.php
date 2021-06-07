@@ -12,9 +12,8 @@ class Transaction extends Model
 
     protected $fillable = ['amount', 'category_id', 'type', 'title',  'happened_on'];
 
-
     public function getAmountAttribute() {
-        return number_format($this->attributes['amount'] / 100, 2, '.', '');
+        return $this->attributes['amount'] / 100;
     }
 
     public function category() {

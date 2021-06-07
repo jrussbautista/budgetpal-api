@@ -22,10 +22,11 @@ class BudgetResource extends JsonResource
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'user_id' => $this->user_id,
-            'amount_spent'  => $this->spent,
+            'amount_spent'  => $this->amount_spent,
             'start_date' => Carbon::parse($this->start_date)->format('F j, Y'), 
             'end_date' => Carbon::parse($this->end_date)->format('F j, Y'), 
-            'status' => $this->status
+            'status' => $this->status,
+            'spent_percentage' => $this->spent_percentage
         ];
     }
 }
