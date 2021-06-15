@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\ChangePasswordController;
 use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\MeController;
 use App\Http\Controllers\Api\ReportController;
+use App\Http\Controllers\Api\SettingsController;
 use App\Http\Controllers\Api\TransactionController;
 use App\Http\Controllers\Api\UpdateProfileController;
 use Illuminate\Support\Facades\Route;
@@ -50,6 +51,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     //Reports
     Route::get('/reports', [ReportController::class, 'index']);
+
+    //Settings
+    Route::put('/settings', [SettingsController::class, 'update']);
 
 
 });

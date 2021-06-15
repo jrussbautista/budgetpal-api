@@ -54,7 +54,7 @@ class DashboardController extends Controller
 
         return [
                 'data' => [
-                    'recentTransaction' =>  new TransactionResource($recentTransaction),
+                    'recentTransaction' =>  $recentTransaction ? new TransactionResource($recentTransaction) : null,
                     'recentOnGoingBudget' => $recentOnGoingBudget ? new BudgetResource($recentOnGoingBudget): null,
                     'analytics' => 
                         [
