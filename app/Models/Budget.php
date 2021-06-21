@@ -5,10 +5,12 @@ namespace App\Models;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Budget extends Model
 {
     use HasFactory;
+    use SoftDeletes;
 
     protected $fillable  = ['amount', 'category_id', 'start_date', 'end_date'];
 

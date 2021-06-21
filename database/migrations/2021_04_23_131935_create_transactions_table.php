@@ -21,6 +21,7 @@ class CreateTransactionsTable extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('category_id')->constrained()->onDelete('cascade');
             $table->date('happened_on');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

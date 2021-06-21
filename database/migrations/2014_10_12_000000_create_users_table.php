@@ -22,7 +22,9 @@ class CreateUsersTable extends Migration
             $table->string('theme')->default('light');
             $table->string('language')->default('en');
             $table->string('currency')->default('USD');
+            $table->boolean('is_admin')->default(false);
             $table->rememberToken();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

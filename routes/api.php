@@ -41,8 +41,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/dashboard', DashboardController::class);
 
     // Categories
-    Route::get('/categories', [CategoryController::class, 'index']);
-
+    Route::apiResource('categories', CategoryController::class);
+    
     // Budget
     Route::apiResource('budgets', BudgetController::class);
 
