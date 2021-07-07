@@ -19,7 +19,8 @@ class LoginWithGoogleController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $accessToken = $request->input('accessToken');
+        $fields = $request->validate(['accessToken' => 'required']);
+        $accessToken = $fields['accessToken'];
 
         $results = Socialite::driver('google')->userFromToken($accessToken);
 
