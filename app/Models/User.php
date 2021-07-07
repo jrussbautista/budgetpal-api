@@ -26,7 +26,10 @@ class User extends Authenticatable
         'password',
         'theme',
         'currency',
-        'language'
+        'language',
+        'image_url',
+        'provider',
+        'provider_id'
     ];
 
     /**
