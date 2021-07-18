@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Auth\Events\Registered;
 
 class AuthController extends Controller
 {
@@ -21,6 +22,7 @@ class AuthController extends Controller
         if(!$user) return response(['message' => 'Email or Password is incorrect'], 401);
 
         $token = auth()->user()->createToken('token');
+        
 
         return  response([
             'data' => [
@@ -38,6 +40,7 @@ class AuthController extends Controller
             'password' => 'required|confirmed'
         ]);
 
+
         $user = User::create(
             [
                 'name' => $validatedData['name'],
@@ -45,6 +48,8 @@ class AuthController extends Controller
                 'password' => Hash::make($validatedData['password'])
             ]
         );
+
+        event(new Registered($user));
 
         $token = $user->createToken('token');
 
