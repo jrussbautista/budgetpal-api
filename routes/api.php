@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\ForgotPasswordController;
 use App\Http\Controllers\Api\LoginWithGoogleController;
 use App\Http\Controllers\Api\MeController;
 use App\Http\Controllers\Api\ReportController;
+use App\Http\Controllers\Api\ResendEmailVerifyController;
 use App\Http\Controllers\Api\ResetPasswordController;
 use App\Http\Controllers\Api\SettingsController;
 use App\Http\Controllers\Api\TransactionController;
@@ -36,7 +37,9 @@ Route::post('/reset-password', ResetPasswordController::class);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
 
-    // Categories
+    Route::post('email/verification-notification', ResendEmailVerifyController::class);
+
+    // Categories   
     Route::apiResource('categories', CategoryController::class);
 
    // Current User Details

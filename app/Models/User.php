@@ -52,6 +52,10 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
+    public function getIsEmailVerifiedAttribute() {
+        return $this->email_verified_at === null ? false : true;
+    }
+
     public function budgets() {
         return $this->hasMany(Budget::class);
     }

@@ -23,7 +23,8 @@ class UserResource extends JsonResource
             'language' => $this->language,
             'currency' => $this->currency,
             'provider' => $this->provider,
-            'created_at' => $this->created_at
+            'is_email_verified' => $this->is_email_verified,
+            'created_at' => $this->created_at,
         ];
     }
 }
